@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.el.ally.wimp.models.Actor;
+import com.el.ally.wimp.models.Award;
 import com.el.ally.wimp.models.Movie;
 import com.el.ally.wimp.repositories.ActorRepository;
+import com.el.ally.wimp.repositories.AwardRepository;
 import com.el.ally.wimp.repositories.MovieRepository;
 
 @RestController
@@ -26,6 +28,9 @@ public class ActorController {//how to update
 	
 	@Autowired
 	private MovieRepository movieRepository;
+	
+	@Autowired
+	private AwardRepository awardRepository;
 
 	public ActorController(ActorRepository actorRepository) {
 		this.actorRepository = actorRepository;
@@ -89,6 +94,15 @@ public class ActorController {//how to update
 		Actor actor = actorRepository.findOne(actorId);
 		Movie movie = movieRepository.findOne(movieId);
 		actor.setMovie(movie);
+		actorRepository.save(actor);
+		return actor;
+	}
+	
+	@PostMapping("{actorId}/awards")
+	public Actor createAward(@PathVariable int actorId, @RequestBody int awardId) {
+		Actor actor = actorRepository.findOne(actorId);
+		Award award = awardRepository.findOne(awardId);
+		actor.getAwards().add(award);
 		actorRepository.save(actor);
 		return actor;
 	}

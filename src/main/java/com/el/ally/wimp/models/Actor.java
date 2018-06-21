@@ -1,17 +1,19 @@
 package com.el.ally.wimp.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="Actor")
+@Table(name="actor")
 public class Actor {
 
 	@Id
@@ -35,6 +37,8 @@ public class Actor {
 	@ManyToOne
 	private Movie movie;
 	
+	@OneToMany
+	private List<Award> awards;
 	
 	public Actor() {}
 	
@@ -44,6 +48,14 @@ public class Actor {
 		this.lastName = lastName;
 		this.activeSinceYear = activeSinceYear;
 		this.birthDate = birthDate;
+	}
+
+	public List<Award> getAwards() {
+		return awards;
+	}
+
+	public void setAwards(List<Award> awards) {
+		this.awards = awards;
 	}
 
 	public int getId() {
